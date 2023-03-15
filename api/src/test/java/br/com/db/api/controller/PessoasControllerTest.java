@@ -1,4 +1,4 @@
-package br.com.db.api;
+package br.com.db.api.controller;
 
 import br.com.db.api.endereco.AtualizarEndereco;
 import br.com.db.api.endereco.CadastroEndereco;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc
 @ExtendWith(MockitoExtension.class)
 public class PessoasControllerTest {
     @Autowired
@@ -43,7 +43,7 @@ public class PessoasControllerTest {
     @MockBean
     private PessoaService pessoaService;
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
 
     @BeforeEach
@@ -102,9 +102,6 @@ public class PessoasControllerTest {
 
     @Test
     void deveDeletarPessoa() throws Exception {
-        mapper.findAndRegisterModules();
-        String pessoaAsJson = mapper.writeValueAsString(new AtualizarPessoas(1L, "João", LocalDate.of(2022, 11, 15), new AtualizarEndereco("95095321", "")));
-
         mockMvc.perform(delete("/pessoas/deletar/1").contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk());
 
     }

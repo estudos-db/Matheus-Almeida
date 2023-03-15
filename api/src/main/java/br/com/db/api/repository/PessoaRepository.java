@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 
-    List<ListagemPessoas> findByEnderecoCep(String cep);
+    List<Pessoa> findByEnderecoCep(String cep);
 }

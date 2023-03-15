@@ -19,7 +19,8 @@ public class Pessoa {
     private String nome;
     private LocalDate dataNascimento;
     private String cpf;
-    @Embedded
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
     public Pessoa(CadastroPessoa pessoa) {

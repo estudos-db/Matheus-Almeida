@@ -32,7 +32,7 @@ public class PessoaService {
     }
 
     public List<ListagemPessoas> listarPorCep(String cep) {
-        return pessoaRepository.findByEnderecoCep(cep);
+        return pessoaRepository.findByEnderecoCep(cep).stream().map(ListagemPessoas::new).collect(Collectors.toList());
     }
 
     public void atualizar(AtualizarPessoas pessoas) {
