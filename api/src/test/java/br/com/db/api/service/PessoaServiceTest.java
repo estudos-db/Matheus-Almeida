@@ -1,22 +1,16 @@
 package br.com.db.api.service;
 
-import br.com.db.api.endereco.AtualizarEndereco;
-import br.com.db.api.endereco.CadastroEndereco;
-import br.com.db.api.endereco.Endereco;
-import br.com.db.api.pessoa.AtualizarPessoas;
-import br.com.db.api.pessoa.CadastroPessoa;
-import br.com.db.api.pessoa.ListagemPessoas;
-import br.com.db.api.pessoa.Pessoa;
+import br.com.db.api.dto.AtualizarEndereco;
+import br.com.db.api.dto.CadastroEndereco;
+import br.com.db.api.dto.AtualizarPessoas;
+import br.com.db.api.dto.CadastroPessoa;
+import br.com.db.api.dto.ListagemPessoas;
+import br.com.db.api.model.Pessoa;
 import br.com.db.api.repository.PessoaRepository;
-import org.junit.jupiter.api.Assertions;
+import br.com.db.api.service.impl.PessoaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
@@ -37,7 +31,7 @@ public class PessoaServiceTest {
     private AtualizarPessoas pessoaEnderecoAtualizado;
 
     @Autowired
-    private PessoaService pessoaService;
+    private PessoaServiceImpl pessoaService;
 
     @BeforeEach
     void init(){

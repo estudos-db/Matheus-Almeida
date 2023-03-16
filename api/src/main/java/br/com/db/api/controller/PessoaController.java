@@ -1,53 +1,57 @@
 package br.com.db.api.controller;
 
-import br.com.db.api.pessoa.AtualizarPessoas;
-import br.com.db.api.pessoa.CadastroPessoa;
-import br.com.db.api.pessoa.ListagemPessoas;
-import br.com.db.api.service.PessoaService;
+import br.com.db.api.dto.AtualizarPessoas;
+import br.com.db.api.dto.CadastroPessoa;
+import br.com.db.api.dto.ListagemPessoas;
+import br.com.db.api.model.Pessoa;
+import br.com.db.api.service.impl.PessoaServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/pessoas")
+@RequestMapping("/pessoa")
 public class PessoaController {
 
-    private final PessoaService pessoaService;
-
-    public PessoaController(PessoaService pessoaService) {
+    private final PessoaServiceImpl pessoaService;
+    @Autowired
+    public PessoaController(PessoaServiceImpl pessoaService) {
         this.pessoaService = pessoaService;
     }
 
     @PostMapping("/cadastrar")
-    @Transactional
-    public void salvar(@RequestBody @Valid CadastroPessoa pessoa){
-        pessoaService.salvar(pessoa);
+    public ResponseEntity<Pessoa> salvar(@RequestBody @Valid CadastroPessoa pessoa){
+        return new ResponseEntity<>(pessoaService.salvar(pessoa), HttpStatus.CREATED);
     }
 
     @GetMapping("/listar")
-    public List<ListagemPessoas> listarPessoas(){
-       return pessoaService.listarPessoas();
+    public ResponseEntity<List<ListagemPessoas>> listarPessoas(){
+       return new ResponseEntity<>(pessoaService.listarPessoas(), HttpStatus.OK);
     }
     @GetMapping("/listar/{id}")
-    public ListagemPessoas listarPorId(@PathVariable Long id){
-        return pessoaService.listarPessoaPorId(id);
+    public ResponseEntity<ListagemPessoas> listarPorId(@PathVariable Long id){
+        return new ResponseEntity<>(pessoaService.listarPessoaPorId(id), HttpStatus.OK);
     }
     @GetMapping("/listarPessoas")
-    public List<ListagemPessoas> listarPorCep(@RequestParam String cep){
-        return pessoaService.listarPorCep(cep);
+    public ResponseEntity<List<ListagemPessoas>> listarPorCep(@RequestParam String cep){
+        return new ResponseEntity<>(pessoaService.listarPorCep(cep), HttpStatus.OK);
     }
     @PutMapping("/atualizar")
     @Transactional
-    public void atualizar(@RequestBody @Valid AtualizarPessoas pessoas){
+    public ResponseEntity<?> atualizar(@RequestBody @Valid AtualizarPessoas pessoas){
         pessoaService.atualizar(pessoas);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/deletar/{id}")
-    @Transactional
-    public void deletar(@PathVariable Long id){
+    public ResponseEntity<?> deletar(@PathVariable Long id){
         pessoaService.deletar(id);
+        return ResponseEntity.ok().build();
     }
 
 }

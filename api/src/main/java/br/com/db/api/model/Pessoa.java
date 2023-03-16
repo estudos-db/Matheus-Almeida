@@ -1,12 +1,14 @@
-package br.com.db.api.pessoa;
+package br.com.db.api.model;
 
-import br.com.db.api.endereco.Endereco;
+import br.com.db.api.dto.AtualizarPessoas;
+import br.com.db.api.dto.CadastroPessoa;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -18,11 +20,11 @@ public class Pessoa {
     private Long id;
     private String nome;
     private LocalDate dataNascimento;
+    @Column(name = "documento")
     private String cpf;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-
     public Pessoa(CadastroPessoa pessoa) {
         this.nome = pessoa.nome();
         this.dataNascimento = pessoa.dataNascimento();

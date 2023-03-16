@@ -1,6 +1,6 @@
-package br.com.db.api.pessoa;
+package br.com.db.api.dto;
 
-import br.com.db.api.endereco.AtualizarEndereco;
+import br.com.db.api.dto.AtualizarEndereco;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;

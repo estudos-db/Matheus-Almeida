@@ -1,7 +1,13 @@
-package br.com.db.api.endereco;
+package br.com.db.api.model;
 
+import br.com.db.api.dto.AtualizarEndereco;
+import br.com.db.api.dto.CadastroEndereco;
+import br.com.db.api.dto.CadastroPessoa;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,10 +21,11 @@ public class Endereco {
     private String cep;
     private String rua;
 
-    public Endereco(CadastroEndereco endereco){
-        this.cep = endereco.cep();
-        this.rua = endereco.rua();
+    public Endereco(CadastroEndereco cadastroEndereco) {
+        this.cep = cadastroEndereco.cep();
+        this.rua = cadastroEndereco.rua();
     }
+
 
     public void atualizarEndereco(AtualizarEndereco endereco) {
         if (endereco.cep() != null){

@@ -1,10 +1,8 @@
-package br.com.db.api.pessoa;
+package br.com.db.api.dto;
 
-import br.com.db.api.endereco.CadastroEndereco;
-import br.com.db.api.endereco.Endereco;
+import br.com.db.api.dto.CadastroEndereco;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,7 +13,7 @@ public record CadastroPessoa(
         String nome,
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,fallbackPatterns = {"yyyy-MM-dd", "dd/MM/yyyy"})
         LocalDate dataNascimento,
-        @CPF
+        @CPF(message = "Cpf invalido")
         @NotBlank
         String cpf,
         @Valid

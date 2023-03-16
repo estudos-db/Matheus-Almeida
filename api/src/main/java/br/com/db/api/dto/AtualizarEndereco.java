@@ -1,5 +1,6 @@
-package br.com.db.api.endereco;
+package br.com.db.api.dto;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record AtualizarEndereco(

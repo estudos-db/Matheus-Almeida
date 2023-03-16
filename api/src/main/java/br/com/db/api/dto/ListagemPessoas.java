@@ -1,4 +1,6 @@
-package br.com.db.api.pessoa;
+package br.com.db.api.dto;
+
+import br.com.db.api.model.Pessoa;
 
 import java.time.LocalDate;
 

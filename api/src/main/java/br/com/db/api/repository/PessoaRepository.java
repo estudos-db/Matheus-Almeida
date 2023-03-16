@@ -1,7 +1,6 @@
 package br.com.db.api.repository;
 
-import br.com.db.api.pessoa.ListagemPessoas;
-import br.com.db.api.pessoa.Pessoa;
+import br.com.db.api.model.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
