@@ -10,9 +10,9 @@ import java.util.List;
 public interface PessoaService {
 
     Pessoa salvar(CadastroPessoa pessoa);
-    List<ListagemPessoas> listarPessoas();
-    ListagemPessoas listarPessoaPorId(Long id);
-    List<ListagemPessoas> listarPorCep(String cep);
-    void atualizar(AtualizarPessoas pessoas);
+    List<ListagemPessoas> buscarPessoas();
+    ListagemPessoas buscarPessoaPorId(Long id);
+    List<ListagemPessoas> buscarPessoasPorCep(String cep);
+    ListagemPessoas atualizar(AtualizarPessoas pessoas);
     void deletar(Long id);
 }

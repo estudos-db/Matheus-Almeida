@@ -29,15 +29,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ExtendWith(MockitoExtension.class)
 public class PessoasControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
     private CadastroPessoa cadastroPessoa;
 
-    @Mock
     private ListagemPessoas listagemPessoas;
 
     @MockBean
@@ -63,21 +60,29 @@ public class PessoasControllerTest {
     void deveCadastrarUmaPessoa() throws Exception {
         String pessoaAsJson = mapper.writeValueAsString(cadastroPessoa);
 
-        mockMvc.perform(post("/pessoa/cadastrar").content(pessoaAsJson).contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isCreated());
+        mockMvc.
+                perform(post("/pessoa")
+                        .content(pessoaAsJson)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isCreated());
     }
 
     @Test
     void deveListarPessoa() throws Exception {
-        when(pessoaService.listarPessoas()).thenReturn(List.of(listagemPessoas));
+        when(pessoaService.buscarPessoas()).thenReturn(List.of(listagemPessoas));
 
-        mockMvc.perform(get("/pessoa/listar").contentType(MediaType.APPLICATION_JSON_VALUE).accept(MediaType.APPLICATION_JSON_VALUE)).andExpect(status().isOk());
+        mockMvc.perform(get("/pessoa")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk());
     }
 
     @Test
     void deveListarPessoaPorId() throws Exception {
-        when(pessoaService.listarPessoaPorId(1L)).thenReturn(listagemPessoas);
+        when(pessoaService.buscarPessoaPorId(1L)).thenReturn(listagemPessoas);
 
-        mockMvc.perform(get("/pessoa/listar/1")
+        mockMvc.perform(get("/pessoa/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -85,9 +90,9 @@ public class PessoasControllerTest {
 
     @Test
     void deveListarPessoaPorCep() throws Exception {
-        when(pessoaService.listarPorCep("95095123")).thenReturn(List.of(listagemPessoas));
+        when(pessoaService.buscarPessoasPorCep("95095123")).thenReturn(List.of(listagemPessoas));
 
-        mockMvc.perform(get("/pessoa/listarPessoas?cep=95095123")
+        mockMvc.perform(get("/pessoa?cep=95095123")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
@@ -95,9 +100,9 @@ public class PessoasControllerTest {
 
     @Test
     void deveAlterarPessoa() throws Exception {
-        String pessoaAsJson = mapper.writeValueAsString(new AtualizarPessoas(1L, "João", LocalDate.of(2022, 11, 15), new AtualizarEndereco("95095321", "")));
+        String pessoaAsJson = mapper.writeValueAsString(new AtualizarPessoas(1L, "João", LocalDate.of(2022, 11, 15), new AtualizarEndereco(1L,"95095321", "")));
 
-        mockMvc.perform(MockMvcRequestBuilders.put("/pessoa/atualizar")
+        mockMvc.perform(MockMvcRequestBuilders.put("/pessoa")
                 .content(pessoaAsJson)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -107,7 +112,7 @@ public class PessoasControllerTest {
 
     @Test
     void deveDeletarPessoa() throws Exception {
-        mockMvc.perform(delete("/pessoa/deletar/1")
+        mockMvc.perform(delete("/pessoa/1")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isOk());
