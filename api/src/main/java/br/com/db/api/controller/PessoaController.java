@@ -3,9 +3,9 @@ package br.com.db.api.controller;
 import br.com.db.api.dto.AtualizarPessoas;
 import br.com.db.api.dto.CadastroPessoa;
 import br.com.db.api.dto.ListagemPessoas;
+import br.com.db.api.exception.NotFoundException;
 import br.com.db.api.model.Pessoa;
 import br.com.db.api.service.impl.PessoaServiceImpl;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,34 +24,31 @@ public class PessoaController {
         this.pessoaService = pessoaService;
     }
 
-    @PostMapping("/cadastrar")
+    @PostMapping()
     public ResponseEntity<Pessoa> salvar(@RequestBody @Valid CadastroPessoa pessoa){
         return new ResponseEntity<>(pessoaService.salvar(pessoa), HttpStatus.CREATED);
     }
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<ListagemPessoas>> listarPessoas(){
-       return new ResponseEntity<>(pessoaService.listarPessoas(), HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<List<ListagemPessoas>> buscarPessoas(@RequestParam(required = false) String cep){
+        if (cep != null){
+            return new ResponseEntity<>(pessoaService.buscarPessoasPorCep(cep), HttpStatus.OK);
+        }
+       return new ResponseEntity<>(pessoaService.buscarPessoas(), HttpStatus.OK);
     }
-    @GetMapping("/listar/{id}")
-    public ResponseEntity<ListagemPessoas> listarPorId(@PathVariable Long id){
-        return new ResponseEntity<>(pessoaService.listarPessoaPorId(id), HttpStatus.OK);
+    @GetMapping("{idPessoa}")
+    public ResponseEntity<ListagemPessoas> buscarPorId(@PathVariable Long idPessoa) throws NotFoundException {
+        return new ResponseEntity<>(pessoaService.buscarPessoaPorId(idPessoa), HttpStatus.OK);
     }
-    @GetMapping("/listarPessoas")
-    public ResponseEntity<List<ListagemPessoas>> listarPorCep(@RequestParam String cep){
-        return new ResponseEntity<>(pessoaService.listarPorCep(cep), HttpStatus.OK);
-    }
-    @PutMapping("/atualizar")
-    @Transactional
-    public ResponseEntity<?> atualizar(@RequestBody @Valid AtualizarPessoas pessoas){
-        pessoaService.atualizar(pessoas);
-        return ResponseEntity.ok().build();
+    @PutMapping
+    public ResponseEntity<ListagemPessoas> atualizar(@RequestBody @Valid AtualizarPessoas pessoas){
+        return new ResponseEntity<>(pessoaService.atualizar(pessoas), HttpStatus.OK);
     }
 
-    @DeleteMapping("/deletar/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id){
-        pessoaService.deletar(id);
-        return ResponseEntity.ok().build();
+    @DeleteMapping("{idPessoa}")
+    public ResponseEntity<?> deletar(@PathVariable Long idPessoa){
+        pessoaService.deletar(idPessoa);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

@@ -4,35 +4,24 @@ import br.com.db.api.dto.AtualizarEndereco;
 import br.com.db.api.dto.CadastroEndereco;
 import br.com.db.api.dto.CadastroPessoa;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "CEP não pode ser vazio")
     private String cep;
+    @NotNull(message = "Rua não pode ser nula")
     private String rua;
-
-    public Endereco(CadastroEndereco cadastroEndereco) {
-        this.cep = cadastroEndereco.cep();
-        this.rua = cadastroEndereco.rua();
-    }
-
-
-    public void atualizarEndereco(AtualizarEndereco endereco) {
-        if (endereco.cep() != null){
-            this.cep = endereco.cep();
-        }
-        if (endereco.rua() != null){
-            this.rua = endereco.rua();
-        }
-    }
 }

@@ -3,14 +3,13 @@ package br.com.db.api.model;
 import br.com.db.api.dto.AtualizarPessoas;
 import br.com.db.api.dto.CadastroPessoa;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,25 +21,9 @@ public class Pessoa {
     private LocalDate dataNascimento;
     @Column(name = "documento")
     private String cpf;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
-    public Pessoa(CadastroPessoa pessoa) {
-        this.nome = pessoa.nome();
-        this.dataNascimento = pessoa.dataNascimento();
-        this.cpf = pessoa.cpf();
-        this.endereco = new Endereco(pessoa.endereco());
-    }
-
-    public void atualizar(AtualizarPessoas pessoas) {
-        if (pessoas.nome() != null) {
-            this.nome = pessoas.nome();
-        }
-        if (pessoas.dataNascimento() != null) {
-            this.dataNascimento = pessoas.dataNascimento();
-        }
-        if (pessoas.endereco() != null) {
-            this.endereco.atualizarEndereco(pessoas.endereco());
-        }
-    }
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "pessoa_endereco",
+            joinColumns = @JoinColumn(name = "pessoa_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "endereco_id", referencedColumnName = "id"))
+    private List<Endereco> enderecos;
 }
