@@ -3,9 +3,9 @@ package br.com.db.api.controller;
 import br.com.db.api.dto.AtualizarPessoas;
 import br.com.db.api.dto.CadastroPessoa;
 import br.com.db.api.dto.ListagemPessoas;
+import br.com.db.api.exception.NotFoundException;
 import br.com.db.api.model.Pessoa;
 import br.com.db.api.service.impl.PessoaServiceImpl;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,11 +37,10 @@ public class PessoaController {
        return new ResponseEntity<>(pessoaService.buscarPessoas(), HttpStatus.OK);
     }
     @GetMapping("{idPessoa}")
-    public ResponseEntity<ListagemPessoas> buscarPorId(@PathVariable Long idPessoa){
+    public ResponseEntity<ListagemPessoas> buscarPorId(@PathVariable Long idPessoa) throws NotFoundException {
         return new ResponseEntity<>(pessoaService.buscarPessoaPorId(idPessoa), HttpStatus.OK);
     }
     @PutMapping
-    @Transactional
     public ResponseEntity<ListagemPessoas> atualizar(@RequestBody @Valid AtualizarPessoas pessoas){
         return new ResponseEntity<>(pessoaService.atualizar(pessoas), HttpStatus.OK);
     }

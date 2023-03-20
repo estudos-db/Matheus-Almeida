@@ -20,8 +20,8 @@ public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
+    @NotBlank(message = "CEP não pode ser vazio")
     private String cep;
-    @NotNull
+    @NotNull(message = "Rua não pode ser nula")
     private String rua;
 }

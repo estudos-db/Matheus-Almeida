@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record AtualizarEndereco(
-        @NotNull
+        @NotNull(message = "id não pode ser nulo")
         Long id,
-        @NotBlank
-        @Pattern(regexp = "\\d{8}")
+        @NotBlank(message = "CEP não pode ser vazio")
+        @Pattern(regexp = "\\d{8}", message = "CEP deve conter 8 números")
         String cep,
-        @NotNull
+        @NotNull(message = "Rua não pode ser nula")
         String rua
 ) {
 }

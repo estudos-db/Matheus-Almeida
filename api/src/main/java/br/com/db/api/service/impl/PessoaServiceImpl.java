@@ -3,6 +3,8 @@ package br.com.db.api.service.impl;
 import br.com.db.api.dto.AtualizarPessoas;
 import br.com.db.api.dto.CadastroPessoa;
 import br.com.db.api.dto.ListagemPessoas;
+import br.com.db.api.exception.NotFoundException;
+import br.com.db.api.mapping.PessoaMapping;
 import br.com.db.api.model.Endereco;
 import br.com.db.api.model.Pessoa;
 import br.com.db.api.repository.EnderecoRepository;
@@ -14,8 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static br.com.db.api.mapping.PessoaMapping.atualizarPessoa;
-import static br.com.db.api.mapping.PessoaMapping.converterPessoa;
+import static br.com.db.api.mapping.PessoaMapping.converter;
 
 @Service
 public class PessoaServiceImpl implements PessoaService {
@@ -29,7 +30,7 @@ public class PessoaServiceImpl implements PessoaService {
     }
     @Override
     public Pessoa salvar(CadastroPessoa pessoa) {
-        Pessoa pessoaEntity = converterPessoa(pessoa);
+        Pessoa pessoaEntity = converter(pessoa);
         return pessoaRepository.save(pessoaEntity);
     }
 
@@ -38,19 +39,21 @@ public class PessoaServiceImpl implements PessoaService {
         return pessoaRepository.findAll().stream().map(ListagemPessoas::new).collect(Collectors.toList());
     }
     @Override
-    public ListagemPessoas buscarPessoaPorId(Long idPessoa) {
-        return new ListagemPessoas(pessoaRepository.findById(idPessoa).get());
+    public ListagemPessoas buscarPessoaPorId(Long idPessoa) throws NotFoundException {
+        return pessoaRepository.findById(idPessoa).map(ListagemPessoas::new).orElseThrow(
+                () -> new NotFoundException("id não encontrado")
+        );
     }
     @Override
     public List<ListagemPessoas> buscarPessoasPorCep(String cep) {
-        return pessoaRepository.findByEnderecoCep(cep).stream().map(ListagemPessoas::new).toList();
+        return pessoaRepository.findByEnderecosCep(cep).stream().map(ListagemPessoas::new).toList();
     }
     @Override
     public ListagemPessoas atualizar(AtualizarPessoas pessoa) {
         Pessoa pessoaId = pessoaRepository.getReferenceById(pessoa.id());
         Endereco endereco = enderecoRepository.getReferenceById(pessoa.endereco().id());
 
-        Pessoa pessoaAtualizada = atualizarPessoa(pessoa,endereco, pessoaId);
+        Pessoa pessoaAtualizada = PessoaMapping.converter(pessoa,endereco, pessoaId);
         return new ListagemPessoas(pessoaAtualizada);
     }
     @Override

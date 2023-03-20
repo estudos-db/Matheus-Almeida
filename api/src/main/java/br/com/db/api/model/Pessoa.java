@@ -21,7 +21,9 @@ public class Pessoa {
     private LocalDate dataNascimento;
     @Column(name = "documento")
     private String cpf;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "endereco_id")
-    private Endereco endereco;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "pessoa_endereco",
+            joinColumns = @JoinColumn(name = "pessoa_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "endereco_id", referencedColumnName = "id"))
+    private List<Endereco> enderecos;
 }

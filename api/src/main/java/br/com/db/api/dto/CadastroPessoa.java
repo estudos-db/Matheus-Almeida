@@ -7,9 +7,10 @@ import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record CadastroPessoa(
-        @NotBlank
+        @NotBlank(message = "Nome não pode ser vazio")
         String nome,
         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,fallbackPatterns = {"yyyy-MM-dd", "dd/MM/yyyy"})
         LocalDate dataNascimento,
@@ -17,7 +18,7 @@ public record CadastroPessoa(
         @NotBlank
         String cpf,
         @Valid
-        CadastroEndereco endereco
+        List<CadastroEndereco> enderecos
 
 ) {
 }

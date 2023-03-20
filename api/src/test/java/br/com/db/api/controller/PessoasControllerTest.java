@@ -32,24 +32,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PessoasControllerTest {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private final ObjectMapper mapper = new ObjectMapper();
+    @MockBean
+    private PessoaServiceImpl pessoaService;
 
     private CadastroPessoa cadastroPessoa;
 
     private ListagemPessoas listagemPessoas;
-
-    @MockBean
-    private PessoaServiceImpl pessoaService;
-    @Autowired
-    private final ObjectMapper mapper = new ObjectMapper();
-
 
     @BeforeEach
     void init() {
         cadastroPessoa = new CadastroPessoa(
                 "João",
                 LocalDate.of(2022, 11, 15),
-                "32711792048", new CadastroEndereco("95095123",
-                ""));
+                "32711792048", List.of(new CadastroEndereco("95095123",
+                "")));
         listagemPessoas = new ListagemPessoas(
                 "João",
                 LocalDate.of(2022, 11, 15),
@@ -60,8 +58,7 @@ public class PessoasControllerTest {
     void deveCadastrarUmaPessoa() throws Exception {
         String pessoaAsJson = mapper.writeValueAsString(cadastroPessoa);
 
-        mockMvc.
-                perform(post("/pessoa")
+        mockMvc.perform(post("/pessoa")
                         .content(pessoaAsJson)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .accept(MediaType.APPLICATION_JSON_VALUE))
