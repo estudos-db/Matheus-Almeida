@@ -37,7 +37,7 @@ public class PessoaController {
        return new ResponseEntity<>(pessoaService.buscarPessoas(), HttpStatus.OK);
     }
     @GetMapping("{idPessoa}")
-    public ResponseEntity<ListagemPessoas> buscarPorId(@PathVariable Long idPessoa) throws NotFoundException {
+    public ResponseEntity<ListagemPessoas> buscarPorId(@PathVariable Long idPessoa){
         return new ResponseEntity<>(pessoaService.buscarPessoaPorId(idPessoa), HttpStatus.OK);
     }
     @PutMapping

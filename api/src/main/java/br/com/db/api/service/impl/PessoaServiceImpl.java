@@ -39,7 +39,7 @@ public class PessoaServiceImpl implements PessoaService {
         return pessoaRepository.findAll().stream().map(ListagemPessoas::new).collect(Collectors.toList());
     }
     @Override
-    public ListagemPessoas buscarPessoaPorId(Long idPessoa) throws NotFoundException {
+    public ListagemPessoas buscarPessoaPorId(Long idPessoa) {
         return pessoaRepository.findById(idPessoa).map(ListagemPessoas::new).orElseThrow(
                 () -> new NotFoundException("id não encontrado")
         );
