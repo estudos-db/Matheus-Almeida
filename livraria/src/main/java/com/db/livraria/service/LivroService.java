@@ -1,0 +1,14 @@
+package com.db.livraria.service;
+
+import com.db.livraria.dto.CadastroLivro;
+import com.db.livraria.model.Livro;
+
+import java.util.List;
+
+public interface LivroService {
+    Livro salvar(CadastroLivro cadastroLivro);
+    List<Livro> buscarLivrosDisponiveis();
+    List<Livro> buscarLivrosAlugados();
+    Livro buscarLivroPorId();
+    List<Livro> buscarLivroPorAutor();
+}
