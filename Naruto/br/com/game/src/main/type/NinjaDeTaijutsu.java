@@ -11,11 +11,11 @@ public class NinjaDeTaijutsu extends Personagem {
 
     @Override
     public String usarJutsu() {
-        return "O ninja de Taijutsu esta atacando!";
+        return "O personagem " + this.getNome() + " atacou com Taijutsu!";
     }
 
     @Override
     public String desviar() {
-        return "O ninja de Taijutsu desviou!" ;
+        return "O personagem " + this.getNome() + " desviou usando Taijutsu!" ;
     }
 }

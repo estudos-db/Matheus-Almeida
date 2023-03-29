@@ -63,17 +63,17 @@ public class TypeNinjaTest {
     @Test
     void deveRetornarMensagemAoUsarJutsu(){
         assertAll(() ->{
-            assertEquals("O ninja de Taijutsu esta atacando!", ninjaDeTaijutsu.usarJutsu());
-            assertEquals("O ninja de Genjutsu esta atacando!", ninjaDeGenjutsu.usarJutsu());
-            assertEquals("O ninja de Ninjutsu esta atacando!", ninjaDeNinjutsu.usarJutsu());
+            assertEquals("O personagem " + ninjaDeTaijutsu.getNome() + " atacou com Taijutsu!", ninjaDeTaijutsu.usarJutsu());
+            assertEquals("O personagem " + ninjaDeGenjutsu.getNome() + " atacou com Genjutsu!", ninjaDeGenjutsu.usarJutsu());
+            assertEquals("O personagem " + ninjaDeNinjutsu.getNome() + " atacou com Ninjutsu!", ninjaDeNinjutsu.usarJutsu());
         });
     }
     @Test
     void deveRetornarMensagemAoDesviar(){
         assertAll(() ->{
-            assertEquals("O ninja de Taijutsu desviou!", ninjaDeTaijutsu.desviar());
-            assertEquals("O ninja de Genjutsu desviou!", ninjaDeGenjutsu.desviar());
-            assertEquals("O ninja de Ninjutsu desviou!", ninjaDeNinjutsu.desviar());
+            assertEquals("O personagem " + ninjaDeTaijutsu.getNome() + " desviou usando Taijutsu!", ninjaDeTaijutsu.desviar());
+            assertEquals("O personagem " + ninjaDeGenjutsu.getNome() + " desviou usando Genjutsu!", ninjaDeGenjutsu.desviar());
+            assertEquals("O personagem " + ninjaDeNinjutsu.getNome() + " desviou usando Ninjutsu!", ninjaDeNinjutsu.desviar());
         });
     }
 
