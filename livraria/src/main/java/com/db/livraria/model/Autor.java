@@ -35,9 +35,5 @@ public class Autor {
     @CPF(message = "CPF invalido")
     @Column(unique = true)
     private String cpf;
-    @OneToMany
-    @JoinTable(name = "autor_livro", joinColumns = @JoinColumn(name = "autor_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "livro_id", referencedColumnName = "id"))
-    private List<Livro> livros;
 
 }

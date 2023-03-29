@@ -22,6 +22,4 @@ public class CadastroAutor {
     private Year anoNascimento;
     @CPF(message = "CPF invalido")
     private String cpf;
-    //TODO: não pode ser Nulo
-    private List<Livro> livros;
 }

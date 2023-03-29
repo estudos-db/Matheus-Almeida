@@ -9,7 +9,7 @@ public interface LivroMapper {
                 .nome(cadastroLivro.getNome())
                 .isbn(cadastroLivro.getIsbn())
                 .dataPublicacao(cadastroLivro.getDataPublicacao())
-                .autores(referenceById)
+                .autores(cadastroLivro.getAutores())
                 .build();
     }
 }

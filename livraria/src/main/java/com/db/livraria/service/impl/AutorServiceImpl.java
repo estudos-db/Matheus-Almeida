@@ -1,12 +1,17 @@
 package com.db.livraria.service.impl;
 
 import com.db.livraria.dto.CadastroAutor;
+import com.db.livraria.exception.LivroAtreladoException;
+import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Autor;
+import com.db.livraria.model.Livro;
 import com.db.livraria.repository.AutorRepository;
 import com.db.livraria.repository.LivroRepository;
 import com.db.livraria.service.AutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static com.db.livraria.mapper.AutorMapper.*;
 
@@ -23,9 +28,7 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public Autor salvar(CadastroAutor autorCadastrado) {
-        //TODO:revisar pois esta errado
         Autor autorEntity = toAutor(autorCadastrado);
-        livroRepository.saveAll(autorEntity.getLivros());
         autorRepository.save(autorEntity);
         return autorEntity;
     }
@@ -37,14 +40,14 @@ public class AutorServiceImpl implements AutorService {
 
     @Override
     public void deletarAutorPorId(Long id) {
-        //TODO: Criar exception de NotFoundException
         Autor autor = autorRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Id não encontrado"));
-        //TODO:Criar exception caso autor tenha um livro atrelado ao nome dele
-        if (autor.getLivros().size() > 0){
-            throw new RuntimeException("Autor tem livros atrelados a ele, remova os livros antes de remover autor");
-        }
+                .orElseThrow(() -> new NotFoundException("Id não encontrado"));
+        Optional<Livro> livroComAutor = livroRepository.findByAutoresNome(autor.getNome());
 
+
+        if (livroComAutor.isPresent()){
+            throw new LivroAtreladoException("O autor tem livros atrelados a ele, remova os livros antes de remover autor");
+        }
         autorRepository.deleteById(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.db.livraria.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -27,11 +28,9 @@ public class Livro {
     private String nome;
     @ISBN(message = "ISBN invalido")
     private String isbn;
-    //TODO:Validar data de publicação de forma totalmente BR
-    private boolean alugado = false;
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPublicacao;
+    private boolean alugado = false;
     @OneToMany
-    @JoinTable(name = "livro_autor", joinColumns = @JoinColumn(name = "livro_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "autor_id", referencedColumnName = "id"))
     private List<Autor> autores;
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/autor")
 public class AutorController {
-
+    //TODO: colocar repository
     private final AutorServiceImpl autorServiceImpl;
     @Autowired
     public AutorController(AutorServiceImpl autorServiceImpl) {
@@ -20,7 +20,7 @@ public class AutorController {
     }
 
     @PostMapping
-    public ResponseEntity<Autor> salvar(@RequestBody @Valid CadastroAutor autorCadastrado){
+    public ResponseEntity<Autor> salvarAutor(@RequestBody @Valid CadastroAutor autorCadastrado){
         return new ResponseEntity<>(autorServiceImpl.salvar(autorCadastrado), HttpStatus.CREATED);
     }
 
@@ -28,9 +28,15 @@ public class AutorController {
     public ResponseEntity<Autor> buscarAutorPorNome(@RequestParam String nome){
         return new ResponseEntity<>(autorServiceImpl.buscarAutorPeloNome(nome), HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletarAutor(@PathVariable Long id){
-        autorServiceImpl.deletarAutorPorId(id);
+    //TODO: deletar
+    @GetMapping("/teste")
+    public ResponseEntity<String> teste(){
+        //TODO: salvar todas as entidades no banco de dados
+        return new ResponseEntity<>("deu certo",HttpStatus.OK);
+    }
+    @DeleteMapping("/{idAutor}")
+    public ResponseEntity<?> deletarAutor(@PathVariable Long idAutor){
+        autorServiceImpl.deletarAutorPorId(idAutor);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

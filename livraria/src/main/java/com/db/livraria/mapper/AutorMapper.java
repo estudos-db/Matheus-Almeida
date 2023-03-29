@@ -11,7 +11,6 @@ public interface AutorMapper {
                 .genero(autorCadastrado.getGenero())
                 .anoNascimento(autorCadastrado.getAnoNascimento())
                 .cpf(autorCadastrado.getCpf())
-                .livros(autorCadastrado.getLivros())
                 .build();
     }
 }

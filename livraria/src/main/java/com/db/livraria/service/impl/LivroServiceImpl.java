@@ -1,11 +1,13 @@
 package com.db.livraria.service.impl;
 
 import com.db.livraria.dto.CadastroLivro;
-import com.db.livraria.model.Autor;
+import com.db.livraria.exception.LivroAlugadoException;
+import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Livro;
 import com.db.livraria.repository.AutorRepository;
 import com.db.livraria.repository.LivroRepository;
 import com.db.livraria.service.LivroService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +19,7 @@ public class LivroServiceImpl implements LivroService {
 
     private final LivroRepository livroRepository;
     private final AutorRepository autorRepository;
-
+    @Autowired
     public LivroServiceImpl(LivroRepository livroRepository, AutorRepository autorRepository) {
         this.livroRepository = livroRepository;
         this.autorRepository = autorRepository;
@@ -26,13 +28,14 @@ public class LivroServiceImpl implements LivroService {
     @Override
     public Livro salvar(CadastroLivro cadastroLivro) {
         Livro livroEntity = toLivro(cadastroLivro);
+        autorRepository.saveAll(livroEntity.getAutores());
         livroRepository.save(livroEntity);
         return livroEntity;
     }
 
     @Override
-    public List<Livro> buscarLivrosDisponiveis() {
-        return null;
+    public List<Livro> buscarLivrosDisponiveisParaAlugar() {
+        return livroRepository.findByAlugadoFalse();
     }
 
     @Override
@@ -41,12 +44,23 @@ public class LivroServiceImpl implements LivroService {
     }
 
     @Override
-    public Livro buscarLivroPorId() {
-        return null;
+    public Livro buscarLivroPorId(Long id) {
+        return livroRepository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado"));
     }
 
     @Override
-    public List<Livro> buscarLivroPorAutor() {
-        return null;
+    public List<Livro> buscarLivroPorAutor(String nome) {
+        return livroRepository.findByAutoresNome(nome).stream().toList();
+    }
+
+    @Override
+    public void deletarLivroPorId(Long id) {
+        Livro livroEntity = livroRepository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado"));
+
+        if (livroEntity.isAlugado()){
+            throw new LivroAlugadoException("Livro alugado não pode ser deletado");
+        }
+
+        livroRepository.deleteById(id);
     }
 }
