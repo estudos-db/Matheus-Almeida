@@ -11,7 +11,7 @@ public class NinjaDeTaijutsu extends Personagem {
     }
 
     @Override
-    public boolean atacar(Personagem personagem, String nomeDoJutsu) {
+    public boolean usarJutsu(Personagem personagem, String nomeDoJutsu) {
         try {
             Jutsu jutsu = this.getJutsus().get(nomeDoJutsu);
 

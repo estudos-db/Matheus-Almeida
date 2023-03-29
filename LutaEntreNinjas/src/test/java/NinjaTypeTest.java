@@ -42,16 +42,16 @@ public class NinjaTypeTest {
     @Test
     void ninjaDeveDesviar() {
         when(ninjaDeTaijutsu.desviar()).thenReturn(false);
-        boolean atacou = ninjaDeNinjutsu.atacar(ninjaDeTaijutsu, "rasengan");
+        boolean atacou = ninjaDeNinjutsu.usarJutsu(ninjaDeTaijutsu, "rasengan");
 
         assertFalse(atacou);
     }
 
     @Test
     void ninjaDeveAtacar(){
-        when(ninjaDeTaijutsu.atacar(ninjaDeNinjutsu, "soco")).thenReturn(true);
+        when(ninjaDeTaijutsu.usarJutsu(ninjaDeNinjutsu, "soco")).thenReturn(true);
 
-        boolean socoPegou = ninjaDeTaijutsu.atacar(ninjaDeNinjutsu, "soco");
+        boolean socoPegou = ninjaDeTaijutsu.usarJutsu(ninjaDeNinjutsu, "soco");
 
         assertTrue(socoPegou);
     }
@@ -60,9 +60,9 @@ public class NinjaTypeTest {
     void ninjaDevePerderChakraAoAtacarOutroNinja(){
         when(ninjaDeNinjutsu.getChakra()).thenReturn(90);
         when(ninjaDeTaijutsu.getVida()).thenReturn(85);
-        when(ninjaDeNinjutsu.atacar(ninjaDeTaijutsu, "rasengan")).thenReturn(true);
+        when(ninjaDeNinjutsu.usarJutsu(ninjaDeTaijutsu, "rasengan")).thenReturn(true);
 
-        boolean danoPegou = ninjaDeNinjutsu.atacar(ninjaDeTaijutsu, "rasengan");
+        boolean danoPegou = ninjaDeNinjutsu.usarJutsu(ninjaDeTaijutsu, "rasengan");
 
         assertTrue(danoPegou);
         assertEquals(90, ninjaDeNinjutsu.getChakra());

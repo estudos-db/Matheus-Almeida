@@ -5,5 +5,5 @@ import model.Personagem;
 
 public interface Ninja {
 
-    boolean atacar(Personagem personagem, String nomeDoJutsu);
+    boolean usarJutsu(Personagem personagem, String nomeDoJutsu);
 }
