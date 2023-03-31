@@ -2,8 +2,10 @@ package com.db.livraria.service.impl;
 
 import com.db.livraria.dto.AtualizarLocatario;
 import com.db.livraria.dto.CadastroLocatario;
+import com.db.livraria.exception.AlugelLocatarioException;
 import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Locatario;
+import com.db.livraria.repository.AluguelRepository;
 import com.db.livraria.repository.LocatarioRepository;
 import com.db.livraria.service.LocatarioService;
 import jakarta.transaction.Transactional;
@@ -16,9 +18,11 @@ import static com.db.livraria.mapper.LocatarioMapper.toLocatario;
 public class LocatarioServiceImpl implements LocatarioService {
 
     private final LocatarioRepository locatarioRepository;
+    private final AluguelRepository aluguelRepository;
     @Autowired
-    public LocatarioServiceImpl(LocatarioRepository locatarioRepository) {
+    public LocatarioServiceImpl(LocatarioRepository locatarioRepository, AluguelRepository aluguelRepository) {
         this.locatarioRepository = locatarioRepository;
+        this.aluguelRepository = aluguelRepository;
     }
 
     @Override
@@ -47,7 +51,11 @@ public class LocatarioServiceImpl implements LocatarioService {
 
     @Override
     public void deletar(Long id) {
-    //TODO: só pode deletar Locatario se ele não estiver alugando nenhum livro
-        //TODO: desenvolver esse método só depois de criar o controller de Cadastrar Aluguel
+        Locatario locatario = locatarioRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Id não encontrado"));
+        aluguelRepository.findByLocatarioNome(locatario.getNome())
+                .ifPresent(v ->{throw new AlugelLocatarioException("Locatario não pode ser excluido pois esta alugando livros");});
+
+        locatarioRepository.deleteById(id);
     }
 }

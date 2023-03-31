@@ -1,6 +1,7 @@
 package com.db.livraria.controller;
 
 import com.db.livraria.dto.CadastroAutor;
+import com.db.livraria.dto.ListagemObrasAutor;
 import com.db.livraria.model.Autor;
 import com.db.livraria.service.impl.AutorServiceImpl;
 import jakarta.validation.Valid;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/autor")
@@ -27,8 +30,10 @@ public class AutorController {
     public ResponseEntity<Autor> buscarAutorPorNome(@RequestParam String nome){
         return new ResponseEntity<>(autorServiceImpl.buscarAutorPeloNome(nome), HttpStatus.OK);
     }
-    //TODO: deletar
-
+    @GetMapping("/obras")
+    public ResponseEntity<List<ListagemObrasAutor>> buscarObrasDoAutorPeloNome(@RequestParam String nome){
+        return new ResponseEntity<>(autorServiceImpl.buscarObrasDoAutorPeloNome(nome), HttpStatus.OK);
+    }
     @DeleteMapping("/{idAutor}")
     public ResponseEntity<HttpStatus> deletarAutor(@PathVariable Long idAutor){
         autorServiceImpl.deletarAutorPorId(idAutor);
