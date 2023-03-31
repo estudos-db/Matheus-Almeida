@@ -1,7 +1,6 @@
 package com.db.livraria.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Livro {
+public class Livro  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,6 +30,6 @@ public class Livro {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataPublicacao;
     private boolean alugado = false;
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Autor> autores;
 }

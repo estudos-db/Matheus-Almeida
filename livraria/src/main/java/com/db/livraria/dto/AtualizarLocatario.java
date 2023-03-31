@@ -5,15 +5,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Builder;
 import lombok.Getter;
-import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
-
 @Getter
-@Builder
-public class CadastroLocatario {
+public class AtualizarLocatario {
     @NotBlank(message = "Nome não pode ser vazio")
     @Size(min = 3, max = 100, message = "Nome tem que ter entre 3 e 100 caracteres")
     private String nome;
@@ -26,7 +22,4 @@ public class CadastroLocatario {
     @Column(unique = true)
     private String email;
     private LocalDate dataNascimento;
-    @CPF(message = "CPF invalido")
-    @Column(unique = true)
-    private String cpf;
 }

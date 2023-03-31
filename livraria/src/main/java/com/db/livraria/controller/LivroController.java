@@ -31,7 +31,10 @@ public class LivroController {
     public ResponseEntity<List<Livro>> buscarLivroDisponiveisParaAlugar(){
         return new ResponseEntity<>(livroService.buscarLivrosDisponiveisParaAlugar(), HttpStatus.OK);
     }
-    //TODO:Criar um controller de livros alugados depois que criar os controllers de aluguel
+    @GetMapping("/alugado")
+    public ResponseEntity<List<Livro>> buscarLivrosAlugados(){
+        return new ResponseEntity<>(livroService.buscarLivrosAlugados(), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Livro> buscarLivroPorId(@PathVariable Long id){
@@ -40,7 +43,7 @@ public class LivroController {
     //TODO:Criar um controller pra buscar livros alugados por um locatario
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletarLivroPorId(@PathVariable Long id){
+    public ResponseEntity<HttpStatus> deletarLivroPorId(@PathVariable Long id){
         livroService.deletarLivroPorId(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

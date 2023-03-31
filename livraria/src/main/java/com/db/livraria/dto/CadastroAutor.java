@@ -1,6 +1,5 @@
 package com.db.livraria.dto;
 
-import com.db.livraria.model.Livro;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,7 +8,7 @@ import lombok.Getter;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.Year;
-import java.util.List;
+
 @Getter
 @Builder
 public class CadastroAutor {

@@ -3,6 +3,7 @@ package com.db.livraria.service.impl;
 import com.db.livraria.dto.CadastroLivro;
 import com.db.livraria.exception.LivroAlugadoException;
 import com.db.livraria.exception.NotFoundException;
+import com.db.livraria.model.Autor;
 import com.db.livraria.model.Livro;
 import com.db.livraria.repository.AutorRepository;
 import com.db.livraria.repository.LivroRepository;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.db.livraria.mapper.LivroMapper.*;
+import static com.db.livraria.mapper.LivroMapper.toLivro;
 
 @Service
 public class LivroServiceImpl implements LivroService {
@@ -27,9 +28,10 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     public Livro salvar(CadastroLivro cadastroLivro) {
-        Livro livroEntity = toLivro(cadastroLivro);
-        autorRepository.saveAll(livroEntity.getAutores());
+        List<Autor> entidadesId = autorRepository.findAllById(cadastroLivro.getAutoresId());
+        Livro livroEntity = toLivro(cadastroLivro, entidadesId);
         livroRepository.save(livroEntity);
+
         return livroEntity;
     }
 
@@ -40,7 +42,7 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     public List<Livro> buscarLivrosAlugados() {
-        return null;
+        return livroRepository.findByAlugadoTrue();
     }
 
     @Override

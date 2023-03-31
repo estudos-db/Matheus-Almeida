@@ -1,5 +1,6 @@
 package com.db.livraria.controller;
 
+import com.db.livraria.dto.AtualizarLocatario;
 import com.db.livraria.dto.CadastroLocatario;
 import com.db.livraria.model.Locatario;
 import com.db.livraria.service.impl.LocatarioServiceImpl;
@@ -7,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/locatario")
@@ -32,4 +31,14 @@ public class LocatarioController {
     public ResponseEntity<Locatario> buscarLocatarioPeloNome(@RequestParam String nome){
         return new ResponseEntity<>(locatarioService.buscarLocatarioPeloNome(nome),HttpStatus.OK);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Locatario> editarLocatario(@PathVariable Long id, @RequestBody AtualizarLocatario locatario){
+        return new ResponseEntity<>(locatarioService.editar(id, locatario), HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deletarLocatario(@PathVariable Long id){
+        locatarioService.deletar(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

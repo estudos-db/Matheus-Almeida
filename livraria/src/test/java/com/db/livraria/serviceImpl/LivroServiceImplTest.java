@@ -1,17 +1,14 @@
 package com.db.livraria.serviceImpl;
 
 import com.db.livraria.dto.CadastroLivro;
-import com.db.livraria.model.Livro;
+import com.db.livraria.mapper.Livro;
 import com.db.livraria.repository.LivroRepository;
 import com.db.livraria.service.impl.LivroServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;

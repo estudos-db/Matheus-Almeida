@@ -1,10 +1,5 @@
 package com.db.livraria.dto;
 
-import com.db.livraria.model.Autor;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
@@ -23,5 +18,5 @@ public class CadastroLivro {
     @ISBN(message = "ISBN invalido")
     private String isbn;
     private LocalDate dataPublicacao;
-    private List<Autor> autores;
+    private List<Long> autoresId;
 }

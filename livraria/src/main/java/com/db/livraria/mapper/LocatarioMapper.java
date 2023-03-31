@@ -1,5 +1,6 @@
 package com.db.livraria.mapper;
 
+import com.db.livraria.dto.AtualizarLocatario;
 import com.db.livraria.dto.CadastroLocatario;
 import com.db.livraria.model.Locatario;
 
@@ -14,5 +15,13 @@ public interface LocatarioMapper {
                 .dataNascimento(cadastroLocatario.getDataNascimento())
                 .cpf(cadastroLocatario.getCpf())
                 .build();
+    }
+    static Locatario toLocatario(Locatario locatario,AtualizarLocatario locatarioAtualizado){
+        locatario.setNome(locatarioAtualizado.getNome());
+        locatario.setGenero(locatarioAtualizado.getGenero());
+        locatario.setTelefone(locatarioAtualizado.getTelefone());
+        locatario.setEmail(locatarioAtualizado.getEmail());
+        locatario.setDataNascimento(locatarioAtualizado.getDataNascimento());
+        return locatario;
     }
 }

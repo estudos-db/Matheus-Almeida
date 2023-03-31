@@ -2,7 +2,7 @@ package com.db.livraria.serviceImpl;
 
 import com.db.livraria.dto.CadastroAutor;
 import com.db.livraria.model.Autor;
-import com.db.livraria.model.Livro;
+import com.db.livraria.mapper.Livro;
 import com.db.livraria.repository.AutorRepository;
 import com.db.livraria.service.impl.AutorServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.Year;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
