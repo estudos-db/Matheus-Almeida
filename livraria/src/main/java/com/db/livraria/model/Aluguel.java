@@ -20,9 +20,11 @@ public class Aluguel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
+    @Builder.Default
     private LocalDateTime dataRetirada = LocalDateTime.now();
     @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
-    private LocalDateTime dataDevolucao;
+    @Builder.Default
+    private LocalDateTime dataDevolucao = LocalDateTime.now().plusDays(2);
     @OneToMany(cascade = CascadeType.PERSIST)
     private List<Livro> livros;
     @OneToOne(cascade = CascadeType.PERSIST)

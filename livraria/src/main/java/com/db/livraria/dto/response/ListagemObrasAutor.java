@@ -1,4 +1,4 @@
-package com.db.livraria.dto;
+package com.db.livraria.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

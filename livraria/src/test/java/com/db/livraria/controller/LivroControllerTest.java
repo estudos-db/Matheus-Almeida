@@ -1,6 +1,6 @@
 package com.db.livraria.controller;
 
-import com.db.livraria.dto.CadastroLivro;
+import com.db.livraria.dto.request.CadastroLivro;
 import com.db.livraria.service.impl.LivroServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

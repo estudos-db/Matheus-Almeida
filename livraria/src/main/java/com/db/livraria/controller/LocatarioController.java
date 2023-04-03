@@ -1,7 +1,7 @@
 package com.db.livraria.controller;
 
-import com.db.livraria.dto.AtualizarLocatario;
-import com.db.livraria.dto.CadastroLocatario;
+import com.db.livraria.dto.request.AtualizarLocatario;
+import com.db.livraria.dto.request.CadastroLocatario;
 import com.db.livraria.model.Locatario;
 import com.db.livraria.service.impl.LocatarioServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

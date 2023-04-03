@@ -1,4 +1,4 @@
-package com.db.livraria.dto;
+package com.db.livraria.dto.request;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;

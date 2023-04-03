@@ -1,6 +1,6 @@
 package com.db.livraria.controller;
 
-import com.db.livraria.dto.CadastroLivro;
+import com.db.livraria.dto.request.CadastroLivro;
 import com.db.livraria.model.Livro;
 import com.db.livraria.service.impl.LivroServiceImpl;
 import jakarta.validation.Valid;
@@ -40,7 +40,6 @@ public class LivroController {
     public ResponseEntity<Livro> buscarLivroPorId(@PathVariable Long id){
         return new ResponseEntity<>(livroService.buscarLivroPorId(id), HttpStatus.OK);
     }
-    //TODO:Criar um controller pra buscar livros alugados por um locatario
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deletarLivroPorId(@PathVariable Long id){

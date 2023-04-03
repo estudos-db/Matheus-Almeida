@@ -1,4 +1,4 @@
-package com.db.livraria.dto;
+package com.db.livraria.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -1,6 +1,6 @@
 package com.db.livraria.serviceImpl;
 
-import com.db.livraria.dto.CadastroLivro;
+import com.db.livraria.dto.request.CadastroLivro;
 import com.db.livraria.exception.LivroAlugadoException;
 import com.db.livraria.model.Autor;
 import com.db.livraria.model.Livro;

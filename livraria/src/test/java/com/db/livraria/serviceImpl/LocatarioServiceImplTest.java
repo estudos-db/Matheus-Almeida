@@ -1,24 +1,24 @@
 package com.db.livraria.serviceImpl;
 
-import com.db.livraria.dto.AtualizarLocatario;
-import com.db.livraria.dto.CadastroLocatario;
+import com.db.livraria.dto.request.AtualizarLocatario;
+import com.db.livraria.dto.request.CadastroLocatario;
+import com.db.livraria.exception.AlugelLocatarioException;
 import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Locatario;
+import com.db.livraria.repository.AluguelRepository;
 import com.db.livraria.repository.LocatarioRepository;
 import com.db.livraria.service.impl.LocatarioServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +27,8 @@ public class LocatarioServiceImplTest {
     private LocatarioServiceImpl locatarioService;
     @Mock
     private LocatarioRepository locatarioRepository;
+    @Mock
+    private AluguelRepository aluguelRepository;
     private Locatario locatario;
 
     @BeforeEach
@@ -95,5 +97,21 @@ public class LocatarioServiceImplTest {
                 .build());
 
         verify(locatarioRepository, times(1)).findById(1L);
+    }
+    @Test
+    void deveExcluirLocatario(){
+        when(locatarioRepository.findById(anyLong())).thenReturn(Optional.of(locatario));
+        when(aluguelRepository.findByLocatarioNome(anyString())).thenReturn(Optional.empty());
+
+        locatarioService.deletar(1L);
+
+        verify(locatarioRepository, times(1)).findById(1L);
+    }
+    @Test
+    void naoDeveExcluirLocatario(){
+        when(locatarioRepository.findById(anyLong())).thenReturn(Optional.of(locatario));
+        when(aluguelRepository.findByLocatarioNome(anyString())).thenThrow(AlugelLocatarioException.class);
+
+        assertThrows(AlugelLocatarioException.class, () -> locatarioService.deletar(1L));
     }
 }

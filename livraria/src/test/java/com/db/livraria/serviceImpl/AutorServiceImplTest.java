@@ -1,6 +1,6 @@
 package com.db.livraria.serviceImpl;
 
-import com.db.livraria.dto.CadastroAutor;
+import com.db.livraria.dto.request.CadastroAutor;
 import com.db.livraria.exception.LivroAtreladoException;
 import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Autor;
@@ -8,7 +8,6 @@ import com.db.livraria.model.Livro;
 import com.db.livraria.repository.AutorRepository;
 import com.db.livraria.repository.LivroRepository;
 import com.db.livraria.service.impl.AutorServiceImpl;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,7 +74,6 @@ class AutorServiceImplTest {
 
         assertThrows(NotFoundException.class, () -> autorService.buscarAutorPeloNome("Monteiro Lobato"), "Autor não encontrado");
     }
-
     @Test
     void deletarAutorPorId() {
         when(autorRepository.findById(any())).thenReturn(Optional.of(autor));

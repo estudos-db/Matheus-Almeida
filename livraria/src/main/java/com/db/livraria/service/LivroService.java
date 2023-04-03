@@ -1,6 +1,6 @@
 package com.db.livraria.service;
 
-import com.db.livraria.dto.CadastroLivro;
+import com.db.livraria.dto.request.CadastroLivro;
 import com.db.livraria.model.Livro;
 
 import java.util.List;

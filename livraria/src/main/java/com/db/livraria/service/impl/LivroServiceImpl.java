@@ -1,6 +1,6 @@
 package com.db.livraria.service.impl;
 
-import com.db.livraria.dto.CadastroLivro;
+import com.db.livraria.dto.request.CadastroLivro;
 import com.db.livraria.exception.LivroAlugadoException;
 import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Autor;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.db.livraria.mapper.LivroMapper.toLivro;
+import static com.db.livraria.mapper.LivroMapper.*;
 
 @Service
 public class LivroServiceImpl implements LivroService {

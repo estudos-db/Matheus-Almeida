@@ -1,7 +1,7 @@
 package com.db.livraria.service;
 
-import com.db.livraria.dto.AtualizarLocatario;
-import com.db.livraria.dto.CadastroLocatario;
+import com.db.livraria.dto.request.AtualizarLocatario;
+import com.db.livraria.dto.request.CadastroLocatario;
 import com.db.livraria.model.Locatario;
 
 public interface LocatarioService {

@@ -1,7 +1,7 @@
 package com.db.livraria.service.impl;
 
-import com.db.livraria.dto.AtualizarLocatario;
-import com.db.livraria.dto.CadastroLocatario;
+import com.db.livraria.dto.request.AtualizarLocatario;
+import com.db.livraria.dto.request.CadastroLocatario;
 import com.db.livraria.exception.AlugelLocatarioException;
 import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Locatario;
@@ -16,6 +16,7 @@ import static com.db.livraria.mapper.LocatarioMapper.toLocatario;
 
 @Service
 public class LocatarioServiceImpl implements LocatarioService {
+    private static final String MESSAGE_NOT_FOUND = "Locatario não encontrado";
 
     private final LocatarioRepository locatarioRepository;
     private final AluguelRepository aluguelRepository;
@@ -34,25 +35,25 @@ public class LocatarioServiceImpl implements LocatarioService {
 
     @Override
     public Locatario buscarLocatarioPorId(Long id) {
-        return locatarioRepository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado"));
+        return locatarioRepository.findById(id).orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
     }
 
     @Override
     public Locatario buscarLocatarioPeloNome(String nome) {
-        return locatarioRepository.findByNome(nome).orElseThrow(() -> new NotFoundException("Nome não encontrado"));
+        return locatarioRepository.findByNome(nome).orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
     }
 
     @Override
     @Transactional
     public Locatario editar(Long id, AtualizarLocatario locatario) {
-        Locatario locatarioEntity = locatarioRepository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado"));
+        Locatario locatarioEntity = locatarioRepository.findById(id).orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
         return toLocatario(locatarioEntity, locatario);
     }
 
     @Override
     public void deletar(Long id) {
         Locatario locatario = locatarioRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Id não encontrado"));
+                .orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
         aluguelRepository.findByLocatarioNome(locatario.getNome())
                 .ifPresent(v ->{throw new AlugelLocatarioException("Locatario não pode ser excluido pois esta alugando livros");});
 

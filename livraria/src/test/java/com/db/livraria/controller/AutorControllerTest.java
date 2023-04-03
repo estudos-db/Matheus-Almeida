@@ -1,6 +1,6 @@
 package com.db.livraria.controller;
 
-import com.db.livraria.dto.CadastroAutor;
+import com.db.livraria.dto.request.CadastroAutor;
 import com.db.livraria.model.Autor;
 import com.db.livraria.service.impl.AutorServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
