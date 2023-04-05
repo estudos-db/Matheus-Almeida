@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/locatario")
+@RequestMapping("/v1/locatario")
 public class LocatarioController {
 
     private final LocatarioServiceImpl locatarioService;

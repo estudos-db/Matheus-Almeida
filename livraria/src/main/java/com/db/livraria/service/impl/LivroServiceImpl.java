@@ -1,8 +1,10 @@
 package com.db.livraria.service.impl;
 
 import com.db.livraria.dto.request.CadastroLivro;
+import com.db.livraria.dto.response.LivroDetails;
 import com.db.livraria.exception.LivroAlugadoException;
 import com.db.livraria.exception.NotFoundException;
+import com.db.livraria.mapper.LivroMapper;
 import com.db.livraria.model.Autor;
 import com.db.livraria.model.Livro;
 import com.db.livraria.repository.AutorRepository;
@@ -36,13 +38,13 @@ public class LivroServiceImpl implements LivroService {
     }
 
     @Override
-    public List<Livro> buscarLivrosDisponiveisParaAlugar() {
-        return livroRepository.findByAlugadoFalse();
+    public List<LivroDetails> buscarLivrosDisponiveisParaAlugar() {
+        return livroRepository.findByAlugadoFalse().stream().map(LivroMapper::toLivroDetails).toList();
     }
 
     @Override
-    public List<Livro> buscarLivrosAlugados() {
-        return livroRepository.findByAlugadoTrue();
+    public List<LivroDetails> buscarLivrosAlugados() {
+        return livroRepository.findByAlugadoTrue().stream().map(LivroMapper::toLivroDetails).toList();
     }
 
     @Override
@@ -51,8 +53,8 @@ public class LivroServiceImpl implements LivroService {
     }
 
     @Override
-    public List<Livro> buscarLivroPorAutor(String nome) {
-        return livroRepository.findByAutoresNome(nome).stream().toList();
+    public List<LivroDetails> buscarLivroPorAutor(String nome) {
+        return livroRepository.findByAutoresNome(nome).stream().map(LivroMapper::toLivroDetails).toList();
     }
 
     @Override

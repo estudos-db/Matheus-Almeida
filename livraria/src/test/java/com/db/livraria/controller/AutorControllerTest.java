@@ -20,7 +20,7 @@ import static io.restassured.RestAssured.given;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 class AutorControllerTest {
-    private static final String URL = "/autor";
+    private static final String URL = "/v1/autor";
     @LocalServerPort
     private int port;
     @Autowired

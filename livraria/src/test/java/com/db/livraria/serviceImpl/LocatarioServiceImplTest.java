@@ -2,7 +2,7 @@ package com.db.livraria.serviceImpl;
 
 import com.db.livraria.dto.request.AtualizarLocatario;
 import com.db.livraria.dto.request.CadastroLocatario;
-import com.db.livraria.exception.AlugelLocatarioException;
+import com.db.livraria.exception.AluguelLocatarioException;
 import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Locatario;
 import com.db.livraria.repository.AluguelRepository;
@@ -110,8 +110,8 @@ public class LocatarioServiceImplTest {
     @Test
     void naoDeveExcluirLocatario(){
         when(locatarioRepository.findById(anyLong())).thenReturn(Optional.of(locatario));
-        when(aluguelRepository.findByLocatarioNome(anyString())).thenThrow(AlugelLocatarioException.class);
+        when(aluguelRepository.findByLocatarioNome(anyString())).thenThrow(AluguelLocatarioException.class);
 
-        assertThrows(AlugelLocatarioException.class, () -> locatarioService.deletar(1L));
+        assertThrows(AluguelLocatarioException.class, () -> locatarioService.deletar(1L));
     }
 }

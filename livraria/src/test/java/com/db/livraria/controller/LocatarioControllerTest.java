@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
@@ -20,9 +21,10 @@ import java.time.LocalDate;
 import static io.restassured.RestAssured.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("test")
  class LocatarioControllerTest {
-    private static final String URL = "/locatario";
+    private static final String URL = "/v1/locatario";
     @LocalServerPort
     private int port;
     @Autowired
@@ -39,17 +41,17 @@ import static io.restassured.RestAssured.given;
                 .nome("Matheus")
                 .genero("Masculino")
                 .telefone("1122223333")
-                .email("teste@email.com")
+                .email("teste12@email.com")
                 .dataNascimento(LocalDate.of(2022,11,15))
-                .cpf("61077855079")
+                .cpf("50068883005")
                 .build();
-
+        locatarioRepository.save(locatario);
     }
 
     @Test
     void deveSalvarLocatario() throws JsonProcessingException {
         String locatarioAsJson = mapper.writeValueAsString(CadastroLocatario.builder()
-                .nome("Matheus")
+                .nome("Joao")
                 .genero("Masculino")
                 .telefone("1122223333")
                 .email("teste2@email.com")
@@ -66,7 +68,6 @@ import static io.restassured.RestAssured.given;
     }
     @Test
     void deveRetornarLocatarioPorId() {
-        locatarioRepository.save(locatario);
         given()
                 .contentType(ContentType.JSON)
                 .when()
@@ -76,7 +77,6 @@ import static io.restassured.RestAssured.given;
     }
     @Test
     void deveRetornarLocatarioPorNome() {
-        locatarioRepository.save(locatario);
         given()
                 .contentType(ContentType.JSON)
                 .when()
@@ -90,22 +90,20 @@ import static io.restassured.RestAssured.given;
                 .nome("Matheus")
                 .genero("Masculino")
                 .telefone("2233334444")
-                .email("teste@email.com")
+                .email("teste12@email.com")
                 .dataNascimento(LocalDate.of(2022,11,15))
                 .build());
-        locatarioRepository.save(locatario);
 
         given()
                 .body(locatarioAtualizadoAsJson)
                 .contentType(ContentType.JSON)
                 .when()
-                .put(URL + "/2")
+                .put(URL + "/1")
                 .then()
                 .statusCode(200);
     }
     @Test
     void deveDeletarLocatario() {
-        locatarioRepository.save(locatario);
         given()
                 .contentType(ContentType.JSON)
                 .when()

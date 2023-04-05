@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/autor")
+@RequestMapping("/v1/autor")
 public class AutorController {
     private final AutorServiceImpl autorServiceImpl;
     @Autowired

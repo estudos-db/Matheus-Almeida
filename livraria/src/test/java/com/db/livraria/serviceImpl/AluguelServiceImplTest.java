@@ -70,6 +70,13 @@ public class AluguelServiceImplTest {
         aluguelService.buscarPorNomeDoLocador("Matheus");
         verify(aluguelRepository, times(1)).findByLocatarioNome("Matheus");
     }
+    @Test
+    void deveDeletarAluguel(){
+        when(aluguelRepository.findById(1L)).thenReturn(Optional.of(aluguel));
+
+        aluguelService.deletarAluguel(1L);
+        verify(aluguelRepository, times(1)).findById(1L);
+    }
 
     void iniciarVariaveis(){
         autor = Autor.builder()

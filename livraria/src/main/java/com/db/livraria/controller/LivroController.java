@@ -1,6 +1,7 @@
 package com.db.livraria.controller;
 
 import com.db.livraria.dto.request.CadastroLivro;
+import com.db.livraria.dto.response.LivroDetails;
 import com.db.livraria.model.Livro;
 import com.db.livraria.service.impl.LivroServiceImpl;
 import jakarta.validation.Valid;
@@ -12,10 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/livro")
+@RequestMapping("/v1/livro")
 public class LivroController {
-    //TODO:Mudar o método de retorno do CRUD(DTO)
-
     private final LivroServiceImpl livroService;
     @Autowired
     public LivroController(LivroServiceImpl livroService) {
@@ -28,11 +27,11 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Livro>> buscarLivroDisponiveisParaAlugar(){
+    public ResponseEntity<List<LivroDetails>> buscarLivroDisponiveisParaAlugar(){
         return new ResponseEntity<>(livroService.buscarLivrosDisponiveisParaAlugar(), HttpStatus.OK);
     }
     @GetMapping("/alugado")
-    public ResponseEntity<List<Livro>> buscarLivrosAlugados(){
+    public ResponseEntity<List<LivroDetails>> buscarLivrosAlugados(){
         return new ResponseEntity<>(livroService.buscarLivrosAlugados(), HttpStatus.OK);
     }
 

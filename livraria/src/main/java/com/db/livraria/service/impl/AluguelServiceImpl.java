@@ -58,4 +58,14 @@ public class AluguelServiceImpl implements AluguelService {
                 .orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
         return toAluguelDetails(aluguel);
     }
+
+    @Override
+    public void deletarAluguel(Long id) {
+        Aluguel aluguel = aluguelRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
+
+        aluguel.getLivros().forEach(v -> v.setAlugado(false));
+
+        aluguelRepository.delete(aluguel);
+    }
 }

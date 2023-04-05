@@ -2,7 +2,7 @@ package com.db.livraria.service.impl;
 
 import com.db.livraria.dto.request.AtualizarLocatario;
 import com.db.livraria.dto.request.CadastroLocatario;
-import com.db.livraria.exception.AlugelLocatarioException;
+import com.db.livraria.exception.AluguelLocatarioException;
 import com.db.livraria.exception.NotFoundException;
 import com.db.livraria.model.Locatario;
 import com.db.livraria.repository.AluguelRepository;
@@ -55,7 +55,7 @@ public class LocatarioServiceImpl implements LocatarioService {
         Locatario locatario = locatarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
         aluguelRepository.findByLocatarioNome(locatario.getNome())
-                .ifPresent(v ->{throw new AlugelLocatarioException("Locatario não pode ser excluido pois esta alugando livros");});
+                .ifPresent(v ->{throw new AluguelLocatarioException("Locatario não pode ser excluido pois esta alugando livros");});
 
         locatarioRepository.deleteById(id);
     }

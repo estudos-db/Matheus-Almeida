@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/aluguel")
+@RequestMapping("/v1/aluguel")
 public class AluguelController {
     private final AluguelServiceImpl aluguelService;
     @Autowired
@@ -30,6 +30,11 @@ public class AluguelController {
     @GetMapping
     public ResponseEntity<AluguelDetails> buscarAluguelPorNomeDoLocador(@RequestParam String nome){
         return new ResponseEntity<>(aluguelService.buscarPorNomeDoLocador(nome), HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deletarAluguel(@PathVariable Long id){
+        aluguelService.deletarAluguel(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

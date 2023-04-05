@@ -10,4 +10,6 @@ public interface AluguelService {
     AluguelDetails buscarPorId(Long id);
 
     AluguelDetails buscarPorNomeDoLocador(String nome);
+
+    void deletarAluguel(Long id);
 }
