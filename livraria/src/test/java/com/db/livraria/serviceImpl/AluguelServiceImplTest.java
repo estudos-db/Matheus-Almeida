@@ -28,7 +28,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class AluguelServiceImplTest {
+ class AluguelServiceImplTest {
     @InjectMocks
     private AluguelServiceImpl aluguelService;
     @Mock
