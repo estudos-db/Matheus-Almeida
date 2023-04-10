@@ -99,6 +99,16 @@ import static io.restassured.RestAssured.given;
                 .then()
                 .statusCode(200);
     }
+    @Test
+    void deveRetornarNotFoundAoBuscarLivros() {
+        livroRepository.save(livro);
+        given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get(URL + "/3")
+                .then()
+                .statusCode(404);
+    }
 
     @Test
     void deveRetornarLivrosAlugados() {
