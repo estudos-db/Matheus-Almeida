@@ -19,7 +19,7 @@ import static com.db.livraria.mapper.LivroMapper.*;
 
 @Service
 public class LivroServiceImpl implements LivroService {
-
+    private static final String MESSAGE_NOT_FOUND = "Autor não encontrado";
     private final LivroRepository livroRepository;
     private final AutorRepository autorRepository;
     @Autowired
@@ -31,6 +31,11 @@ public class LivroServiceImpl implements LivroService {
     @Override
     public Livro salvar(CadastroLivro cadastroLivro) {
         List<Autor> entidadesId = autorRepository.findAllById(cadastroLivro.getAutoresId());
+
+        if (entidadesId.isEmpty()){
+            throw new NotFoundException(MESSAGE_NOT_FOUND);
+        }
+
         Livro livroEntity = toLivro(cadastroLivro, entidadesId);
         livroRepository.save(livroEntity);
 
@@ -49,7 +54,7 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     public Livro buscarLivroPorId(Long id) {
-        return livroRepository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado"));
+        return livroRepository.findById(id).orElseThrow(() -> new NotFoundException("Livro não encontrado"));
     }
 
     @Override
@@ -59,7 +64,7 @@ public class LivroServiceImpl implements LivroService {
 
     @Override
     public void deletarLivroPorId(Long id) {
-        Livro livroEntity = livroRepository.findById(id).orElseThrow(() -> new NotFoundException("Id não encontrado"));
+        Livro livroEntity = livroRepository.findById(id).orElseThrow(() -> new NotFoundException(MESSAGE_NOT_FOUND));
 
         if (livroEntity.isAlugado()){
             throw new LivroAlugadoException("Livro alugado não pode ser deletado");

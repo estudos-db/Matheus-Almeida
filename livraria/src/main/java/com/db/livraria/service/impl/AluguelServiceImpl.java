@@ -35,6 +35,11 @@ public class AluguelServiceImpl implements AluguelService {
     @Override
     public Aluguel salvar(CadastroAluguel cadastroAluguel) {
         List<Livro> livrosAchados = livroRepository.findAllById(cadastroAluguel.getIdLivros());
+
+        if (livrosAchados.isEmpty()){
+            throw new NotFoundException("Livro não encontrado");
+        }
+
         livrosAchados.forEach(v -> v.setAlugado(true));
 
         Locatario locatarioEncontrado = locatarioRepository.findById(cadastroAluguel.getIdLocatario())

@@ -91,7 +91,7 @@ class AluguelControllerTest {
     @Test
     void deveSalvarUmAluguel() throws JsonProcessingException {
         String aluguelAsJson = objectMapper.writeValueAsString(CadastroAluguel.builder()
-                .idLivros(List.of())
+                .idLivros(List.of(1L))
                 .idLocatario(1L).build());
 
         given()

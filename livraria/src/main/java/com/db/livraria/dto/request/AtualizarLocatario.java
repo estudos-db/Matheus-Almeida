@@ -23,5 +23,6 @@ public class AtualizarLocatario {
     @Email(message = "email invalido")
     @Column(unique = true)
     private String email;
+    @NotNull(message = "Data de Nascimento não pode ser nula")
     private LocalDate dataNascimento;
 }

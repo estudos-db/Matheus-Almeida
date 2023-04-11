@@ -1,6 +1,7 @@
 package com.db.livraria.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +18,8 @@ public class CadastroLivro {
     private String nome;
     @ISBN(message = "ISBN invalido")
     private String isbn;
+    @NotNull(message = "Data de Publicação não pode ser nula")
     private LocalDate dataPublicacao;
+    @NotNull(message = "Autores não podem ser nulos")
     private List<Long> autoresId;
 }
