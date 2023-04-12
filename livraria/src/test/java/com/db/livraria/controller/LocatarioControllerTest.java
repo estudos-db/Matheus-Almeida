@@ -157,7 +157,7 @@ import static io.restassured.RestAssured.given;
                 .when()
                 .delete(URL + "/1")
                 .then()
-                .statusCode(500);
+                .statusCode(409);
     }
 
 }

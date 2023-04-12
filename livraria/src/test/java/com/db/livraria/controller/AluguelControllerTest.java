@@ -103,6 +103,20 @@ class AluguelControllerTest {
                 .statusCode(201);
     }
     @Test
+    void naoDeveSalvarUmAluguel() throws JsonProcessingException {
+        String aluguelAsJson = objectMapper.writeValueAsString(CadastroAluguel.builder()
+                .idLivros(List.of(1123L))
+                .idLocatario(1L).build());
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(aluguelAsJson)
+                .when()
+                .post(URL)
+                .then()
+                .statusCode(404);
+    }
+    @Test
     void deveRetornarUmAluguelPorId(){
         aluguelRepository.save(aluguel);
         given()

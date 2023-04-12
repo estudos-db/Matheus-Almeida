@@ -103,7 +103,7 @@ class AutorControllerTest {
                 .when()
                 .delete(URL + "/1")
                 .then()
-                .statusCode(500);
+                .statusCode(409);
     }
 
 

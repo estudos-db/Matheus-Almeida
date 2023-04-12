@@ -78,6 +78,23 @@ import static io.restassured.RestAssured.given;
                 .then()
                 .statusCode(201);
     }
+    @Test
+    void naoDeveSalvarLivro() throws Exception {
+        String livroAsJson = mapper.writeValueAsString(CadastroLivro.builder()
+                .nome("O Minotauro")
+                .isbn("9788525044297")
+                .dataPublicacao(LocalDate.of(2020, 11, 11))
+                .autoresId(List.of(123L))
+                .build());
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(livroAsJson)
+                .when()
+                .post(URL)
+                .then()
+                .statusCode(404);
+    }
 
     @Test
     void deveRetornarLivrosParaAlugar() {
